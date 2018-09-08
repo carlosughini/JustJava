@@ -1,5 +1,6 @@
 package com.example.android.justjava;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -135,7 +136,7 @@ public class MainActivity extends AppCompatActivity {
      * @return text summary
      */
     private String createOrderSummary(int price, boolean addWhippedCream, boolean addChocolate, String name) {
-        String priceMessage = "Name: " + name;
+        @SuppressLint({"StringFormatInvalid", "LocalSuppress"}) String priceMessage = getString(R.string.order_summary_name, name);
         priceMessage += "\nAdd whipped cream? " + addWhippedCream;
         priceMessage += "\nAdd chocolate? " + addChocolate;
         priceMessage += "\nQuantity: " + quantity;
