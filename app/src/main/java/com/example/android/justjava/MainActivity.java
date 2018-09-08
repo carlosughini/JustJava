@@ -1,6 +1,7 @@
 package com.example.android.justjava;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -41,17 +42,17 @@ public class MainActivity extends AppCompatActivity {
 
         int price = calculatePrice(hasWhippedCream, hasChocolate);
         String priceMessage = createOrderSummary(price, hasWhippedCream, hasChocolate, name);
-        String email = "udacityandroiddemo@gmail.com";
-        String subject = "JustJava order for Kaptain Kunal";
-        Intent intent = new Intent(Intent.ACTION_SEND);
-        intent.setType("*/*");
-        intent.putExtra(Intent.EXTRA_EMAIL, email);
+        String subject = "JustJava order for " + name;
+        Intent intent = new Intent(Intent.ACTION_SENDTO);
+        intent.setData(Uri.parse("mailto:"));// only email apps should handle this
         intent.putExtra(Intent.EXTRA_SUBJECT, subject);
         intent.putExtra(Intent.EXTRA_TEXT, priceMessage);
         if (intent.resolveActivity(getPackageManager()) != null) {
             startActivity(intent);
         }
-        //displayMessage(priceMessage);
+        TextView priceText = (TextView) findViewById(R.id.price_text);
+        priceText.setVisibility(View.VISIBLE);
+        displayMessage(priceMessage);
     }
 
     /**
@@ -88,6 +89,15 @@ public class MainActivity extends AppCompatActivity {
         }
         quantity = quantity - 1;
         display(quantity);
+    }
+
+    /**
+     * This method displays the given text on the screen.
+     */
+    private void displayMessage(String message) {
+        TextView priceTextView = (TextView) findViewById(R.id.price_text_view);
+        priceTextView.setVisibility(View.VISIBLE);
+        priceTextView.setText(message);
     }
 
     /**
